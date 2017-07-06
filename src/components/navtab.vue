@@ -3,7 +3,7 @@
     <div class="find_nav_left">
       <div class="find_nav_list">
           <ul>
-              <li v-for='(item,index) in navtab' class="find_nav_cur"><a href="javascript:void(0)">{{item}}</a></li>
+              <li @click='tabClick(item)' v-for='(item,index) in navtab' :class="{'find_nav_cur':tabName == item}"><a href="javascript:void(0)">{{item}}</a></li>
           </ul>
       </div>
     </div>
@@ -22,7 +22,8 @@ export default {
       return {
         msg: 'template Vue',
         name: 'Reborn',
-        navtab:['推荐','热点','上海','视频','社会','娱乐','科技','问答','汽车']
+        navtab:['推荐','热点','上海','视频','社会','娱乐','科技','问答','汽车'],
+        tabName:'推荐'
       }
     },
   components: {
@@ -37,8 +38,8 @@ export default {
     foo() {
       console.log('foo')
     },
-    init(){
-
+    tabClick(item){
+      this.tabName = item;
 
     }
   }

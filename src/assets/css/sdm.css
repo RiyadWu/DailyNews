@@ -1,0 +1,130 @@
+html,body{
+	font-family: chaparral-pro, palatino, georgia, serif !important;
+}
+body,html{ height:100%; overflow: hidden;}
+body{ font-family: "Microsoft YaHei",Arial, Helvetica, sans-serif !important}
+ body,div,dl,dt,dd,ul,ol,li,pre,form, fieldset,input,textarea,p,blockquote,th,td { margin:0; padding:0; } table { border-collapse:collapse; border-spacing:0; } fieldset,img { border:0; } address,caption,cite,code,dfn,em,strong,th,var { font-style:normal; font-weight:normal; } ol,ul { list-style:none; } caption,th { text-align:left; } q:before,q:after { content:''; } abbr,acronym { border:0; } 
+a{ cursor:pointer; 
+    outline: none;
+    text-decoration: none;}
+h1,h2,h3{
+  font-weight: bolder !important;
+}
+input{
+  background: transparent;
+  outline: none;
+  text-decoration: none;
+  border: none;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+textarea {
+    height: auto;
+    resize: none;
+    outline: none;
+    text-decoration: none;
+}
+*{
+  /*overflow: auto;*/
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+a:hover{ text-decoration:none !important;}
+.clear{clear:both; height: 0; line-height: 0; font-size: 0}
+[v-cloak] {
+  display: none;
+}
+.noborder{
+	border:none !important;
+}
+.pad_0{
+	padding: 0 !important;
+}
+.fontb{
+	font-weight: bolder;
+}
+.sdm_grey{
+	color: #ccc;
+	letter-spacing:1px;
+}
+p{
+	letter-spacing:2px;
+}
+.cursor{
+	cursor: pointer;
+}
+.omit{
+	/*display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;*/
+    max-height: 100px;
+    overflow: hidden;
+}
+.omit_p {
+    position:relative;
+    line-height:1.4em;
+    /* 3 times the line-height to show 3 lines */
+    height:2.8em;
+    overflow:hidden;
+    padding: 5px 10px;
+}
+.omit_p::after {
+    content:". . .";
+    font-weight:bolder;
+    position:absolute;
+    bottom:0;
+    right:20px;
+    padding:0 20px 1px 20px;
+    /*background:url(http://css88.b0.upaiyun.com/css88/2014/09/ellipsis_bg.png) repeat-y;*/
+}
+
+.box{
+  border:1px solid #ccc;
+  padding:10px;
+  margin:10px;
+}
+.center{
+  text-align: center;
+}
+.fl{
+  float: left;
+}
+.fr{
+  float: right;
+}
+@-webkit-keyframes sliderightout{from{-webkit-transform:translateX(0px);opacity:1}to{-webkit-transform:translateX(50%);opacity:0}}
+@-webkit-keyframes slideleftin{from{-webkit-transform:translateX(-50%);opacity:0}to{-webkit-transform:translateX(0px);opacity:1}}
+@-webkit-keyframes slideleftout{from{-webkit-transform:translateX(0px);opacity:1}to{-webkit-transform:translateX(-50%);opacity:0}}
+@-webkit-keyframes sliderightin{from{-webkit-transform:translateX(50%);opacity:0}to{-webkit-transform:translateX(0px);opacity:1}}
+
+.slideleftout{-webkit-animation:slideleftout 350ms ease-in-out;}
+.slideleftin{-webkit-animation:slideleftin 350ms ease-in-out;}
+.sliderightout{-webkit-animation:sliderightout 350ms ease-in-out;}
+.sliderightin{-webkit-animation:sliderightin 350ms ease-in-out;}
+
+.slide-right-enter-active{
+  -webkit-animation:sliderightin 350ms ease-in-out;
+}
+.slide-right-leave-active{
+  -webkit-animation:slideleftout 350ms ease-in-out;
+}
+.slide-left-enter-active{
+  -webkit-animation:slideleftin 350ms ease-in-out;
+}
+.slide-left-leave-active{
+  -webkit-animation:sliderightout 350ms ease-in-out;
+}
+@-webkit-keyframes fadein{from{opacity:0}to{opacity:1}}
+@-webkit-keyframes fadeout{from{opacity:1}to{opacity:0}}
+.fade-enter-active{
+  -webkit-animation:fadein 350ms ease-in-out;   
+}
+.fade-leave-active{
+  -webkit-animation:fadeout 350ms ease-in-out;   
+}
+
+/*reset CSS*/
+
+.weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon, .weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon>i, .weui-tabbar__item.weui-bar__item_on .weui-tabbar__label{
+  color: #E64340 !important;
+}

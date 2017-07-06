@@ -1,5 +1,6 @@
 require('../css/weui.min.css');
 require('../css/sdm.css');
+import data from '../../../mock/mock';
 
 //工具方法
 var utils = {

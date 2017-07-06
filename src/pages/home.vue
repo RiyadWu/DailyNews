@@ -37,7 +37,6 @@ export default {
     // 'r-navtab':navtab
   },
   created(){
-    this.foo()
   },
   mounted() {
   },

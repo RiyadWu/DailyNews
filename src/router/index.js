@@ -17,6 +17,10 @@ import home from '@/pages/home'
 import NotFound from '@/pages/404'
 import query from '@/pages/query'
 import homePage from '@/pages/homePage'
+import video from '@/pages/video'
+import headline from '@/pages/headline'
+import user from '@/pages/user'
+import content from '@/pages/content'
 
 
 Vue.use(Router)
@@ -26,12 +30,23 @@ export default new Router({
     { path: '*', component: NotFound },
     {
       path: '/',
-      name: 'home',
       component: home,
       children: [
         {
           path: '/',
           component: homePage
+        },
+        {
+          path: '/video',
+          component: video
+        },
+        {
+          path: '/headline',
+          component: headline
+        },
+        {
+          path: '/user',
+          component: user
         },
       ]
     },
@@ -40,20 +55,10 @@ export default new Router({
       name: 'query',
       component: query
     },
-    // {
-    //   path:'/movie',
-    //   name:'movie',
-    //   component:movie,
-    //   children: [
-    //     {
-    //       path: '/movie',
-    //       component: movielist
-    //     },
-    //     {
-    //       path: '/movie/moviedetail',
-    //       component: moviedetail
-    //     }
-    //   ]
-    // },
+    {
+      path: '/content/:id',
+      name: 'content',
+      component: content
+    },
   ]
 })

@@ -5,9 +5,9 @@
       <r-navtab></r-navtab>
     </div>
     <div class='weui-tab__panel' style="padding-top:90px;">
-      <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" :autoFill = 'false'>
+      <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" :autoFill='false'>
         <!-- top -->
-        <div class="weui-panel noborder" style="margin-bottom:10px;">
+        <div v-show='!isEmptyObject(top)' class="weui-panel noborder" style="margin-bottom:10px;">
             <div class="weui-panel__bd">
                 <div class="weui-media-box weui-media-box_text">
                     <p class="weui-media-box__desc">{{top.title}}</p>
@@ -25,16 +25,16 @@
         <div class="weui-panel" :class='{noborder:index == 0}' v-for='(item,index) in list'>
             <div class="weui-panel__bd">
                 <div class="weui-media-box weui-media-box_text">
-                    <p class="weui-media-box__desc">{{item.title}}</p>
+                    <p class="weui-media-box__desc" @click='toContent(item)'>{{item.title}}</p>
                     <div class='weui-media-box_img'>
-                      <img v-for='(imgs,index) in item.img' :src="imgs" alt="">
+                      <img v-for='(imgs,index) in item.img' v-lazy="imgs" alt="">
                     </div>
                     <ul class="weui-media-box__info">
                         <li class="weui-media-box__info__meta">{{item.author}}</li>
                         <li class="weui-media-box__info__meta">{{item.commentNum}} 评论</li>
                         <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">{{item.time<=1?'刚刚':item.time}} <span v-show='item.time>1'>分钟前</span>
                         </li>
-                        <span class='remove' @click='pop($event,index)'>
+                        <span class='remove' @click.stop='pop($event,index)'>
                           <i class='fa fa-remove'></i>
                         </span>
                     </ul>
@@ -48,23 +48,6 @@
       </mt-loadmore>
       
     </div>
-    <mt-popup 
-      v-model="showPop"
-      popup-transition="popup-fade">
-      <div class='bubble_box' :class='[isUP?"arrows_up":"arrows_down"]'>
-        <div class='bubble_box-row'>
-          <h5 class='fl'>可选理由,精准屏蔽</h5>
-          <a href="javascript:;" @click='unRecommend' class="weui-btn weui-btn_mini weui-btn_warn fr">不感兴趣</a>
-          <div class='clear'></div>
-        </div>
-        <div class='bubble_box-row textl'>
-          <a href="javascript:;" @click='unRecommend' class="weui-btn weui-btn_mini weui-btn_default">看过了</a>
-          <a href="javascript:;" @click='unRecommend' class="weui-btn weui-btn_mini weui-btn_default">内容太水</a>
-          <a href="javascript:;" @click='unRecommend' class="weui-btn weui-btn_mini weui-btn_default">不好看</a>
-          <a href="javascript:;" @click='unRecommend' class="weui-btn weui-btn_mini weui-btn_default">不想看</a>
-        </div>
-      </div>
-    </mt-popup>
 
   </div>
 </template>
@@ -83,15 +66,12 @@ export default {
         name: 'Reborn',
         search_info:['乐高积木','web前端','炉石传说'],
         list:[],
-        top:{
-
-        },
+        top:Object,
         nodata:false,
         allLoaded:false,
         page:1,
         showPop:false,
-        isUP:Boolean,
-        index:Number
+        index:Number,
       }
     },
   components: {
@@ -155,68 +135,42 @@ export default {
       this.list = [];
       this.top = {};
     },
+    //to content
+    toContent(item){
+      this.$router.push({ name: 'content', params: { id: item.id , author:item.author}})
+    },
     //click pop
     pop(e,index){
       log('index==============>'+index);
       this.index = index;
-      this.showPop = true;
+      this.$parent.showPop = true;
       let H = $(window).height();
       let poph = $('.mint-popup').height();
       let top = e.screenY + e.offsetY+10;
       let oTop;
       if (H - top < poph) {
-        this.isUP = false;
+        this.$parent.isUP = false;
         oTop = top - poph;
       }else{
-        this.isUP = true;
+        this.$parent.isUP = true;
         oTop = top;
       }
       $('.mint-popup').css('top',oTop+'px')
     },
-    unRecommend(){
-      this.showPop = false;
-      setTimeout(()=>{
-        // this.list.splice(this.index,1);
-        u.delObj(this.list,this.index);
-      },500)
+    unFollow(){
+      this.$parent.showPop = false;
+      u.delObj(this.list,this.index);
+    },
+    isEmptyObject(e) {
+        var t;
+        for (t in e) {
+            return !1;
+        }
+        return !0
     }
   }
 }
 </script>
 
 <style scoped>
-.mint-popup{
-  background-color: transparent;
-  width: 90%;
-}
-.arrows_up:before{
-    display: inline-block;
-    width: 0;
-    height: 0;
-    border: solid transparent;
-    border-width: 10px;
-    border-bottom-color: #fff;
-    content: "";
-    position: absolute;
-    top: -18px;
-    right: 8px;
-}
-.arrows_down:before{
-    display: inline-block;
-    width: 0;
-    height: 0;
-    border: solid transparent;
-    border-width: 10px;
-    border-top-color: #fff;
-    content: "";
-    position: absolute;
-    bottom: -18px;
-    right: 8px;
-}
-.bubble_box{
-  padding:15px;
-  text-align: center;
-  border-radius: 10px;
-  background-color: #f8f8f8;
-}
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div class="weui-tabbar">
-      <a href="javascript:;" @click='tab_click(item)' class="weui-tabbar__item" :class='{"weui-bar__item_on":tabName == item.text}' v-for='(item,index) in tab'>
+      <a href="javascript:;" @click='tab_click(item,index)' class="weui-tabbar__item" :class='{"weui-bar__item_on":tabName == item.text}' v-for='(item,index) in tab'>
           <span style="display: inline-block;position: relative;">
-              <i class="weui-tabbar__icon fa fa-lg" :class='item.icon'></i>
+              <i class="weui-tabbar__icon fa" :class='item.icon'></i>
               <span v-if='index == 0' class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>
           </span>
           <!-- <i class="weui-tabbar__icon fa fa-lg" :class='item.icon'></i> -->
@@ -32,8 +32,8 @@ export default {
             icon:'fa-comment-o'
           },
           {
-            text:'小视频',
-            icon:'fa-play-circle-o'
+            text:'我的',
+            icon:'fa-user'
           }
         ],
         tabName:'首页'
@@ -52,9 +52,10 @@ export default {
     foo() {
       console.log('foo')
     },
-    tab_click(item){
+    tab_click(item,index){
       this.tabName = item.text;
-      
+      let arr = ['','video','headline','user'];
+      this.$router.push({ path: '/'+arr[index]})   
     }
   }
 }

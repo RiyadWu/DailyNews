@@ -24,8 +24,8 @@ var utils = {
 
         return res;
     },
-    delObj:function(obj,num){
-    	obj.splice(num,1)
+    delObj: function(obj, num) {
+        obj.splice(num, 1)
     }
 
 };
@@ -94,6 +94,7 @@ $(function() {
         }
     });
 });
+
 function navName(c_nav) {
     switch (c_nav) {
         case "推荐":

@@ -5,7 +5,7 @@
       <r-navtab></r-navtab>
     </div>
     <div class='weui-tab__panel' style="padding-top:90px;">
-      <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" :autoFill='false'>
+      <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" :autoFill='false' @top-status-change="handleTopChange">
         <!-- top -->
         <div v-show='!isEmptyObject(top)' class="weui-panel noborder" style="margin-bottom:10px;">
             <div class="weui-panel__bd">
@@ -45,8 +45,15 @@
         <div v-show = 'nodata' class="weui-loadmore weui-loadmore_line">
             <span class="weui-loadmore__tips">没有啦!</span>
         </div>
+
+        <!-- top load -->
+        <div slot="top" class="mint-loadmore-top">
+          <span v-show="topStatus !== 'loading'">↓</span>
+          <r-pacman :load='topStatus == "loading"'></r-pacman>
+        </div>
+        <!-- /top load -->
+
       </mt-loadmore>
-      
     </div>
 
   </div>
@@ -56,6 +63,7 @@
 import u from '@/assets/js/Lib'
 import search from '@/components/search';
 import navtab from '@/components/navtab';
+import pacman from '@/components/pacman';
 import { Loadmore } from 'mint-ui';
 import { Popup } from 'mint-ui';
 
@@ -72,13 +80,16 @@ export default {
         page:1,
         showPop:false,
         index:Number,
+        ban:false,
+        topStatus:'',
       }
     },
   components: {
     'r-search': search,
     'r-navtab':navtab,
     'mt-loadmore':Loadmore,
-    "mt-popup":Popup
+    "mt-popup":Popup,
+    'r-pacman':pacman
   },
   created(){
       this.getData()
@@ -90,10 +101,16 @@ export default {
     foo() {
       console.log('foo')
     },
+    handleTopChange(status){
+      this.topStatus = status;
+    },
     //loadData
     getData(){
+      this.loading = true;
       this.$http.get('/news').then(res => {
           // success callback
+          this.ban = false;
+          this.loading = false;
           console.log('load data 第'+this.page+'页')
           let topinfo = res.data.data.top;
           let list = res.data.data.content;
@@ -109,12 +126,14 @@ export default {
           this.page++
       }, res => {
           // error callback
+          this.ban = false;
+          this.loading = false;
           console.log(res)
       })
     },
     //pull down
     loadTop(){
-
+      this.ban = true;
       setTimeout(()=>{
         this.$refs.loadmore.onTopLoaded();
         this.initList();
@@ -123,7 +142,7 @@ export default {
     },
     //pull up
     loadBottom(){
-      // this.allLoaded = true;
+      this.ban = true;
       setTimeout(()=>{
         this.$refs.loadmore.onBottomLoaded();
         this.getData()
@@ -137,6 +156,9 @@ export default {
     },
     //to content
     toContent(item){
+      if(this.ban){
+        return
+      }
       this.$router.push({ name: 'content', params: { id: item.id , author:item.author}})
     },
     //click pop

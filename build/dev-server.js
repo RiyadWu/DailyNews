@@ -25,20 +25,20 @@ var proxyTable = config.dev.proxyTable
 var app = express()
 //请求数据
 
-var apiRoutes = express.Router();
+// var apiRoutes = express.Router();
 
-apiRoutes.get('/testMock',function (req,res) {
-  var data = Mock.mock({
-      // 属性 list 的值是一个数组，其中含有 1 到 10 个元素
-      'list|1-10': [{
-          // 属性 id 是一个自增数，起始值为 1，每次增 1
-          'id|+1': 1
-      }]
-  })
-  res.json(data);
-});
+// apiRoutes.get('/testMock',function (req,res) {
+//   var data = Mock.mock({
+//       // 属性 list 的值是一个数组，其中含有 1 到 10 个元素
+//       'list|1-10': [{
+//           // 属性 id 是一个自增数，起始值为 1，每次增 1
+//           'id|+1': 1
+//       }]
+//   })
+//   res.json(data);
+// });
 
-app.use('/api',apiRoutes);
+// app.use('/api',apiRoutes);
 
 var compiler = webpack(webpackConfig)
 

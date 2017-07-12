@@ -1,6 +1,6 @@
 require('../css/weui.min.css');
 require('../css/sdm.css');
-import data from '../../../mock/mock';
+// import data from '../../../mock/mock';
 
 //工具方法
 var utils = {
@@ -26,7 +26,10 @@ var utils = {
     },
     delObj: function(obj, num) {
         obj.splice(num, 1)
-    }
+    },
+    moment:function(nS) {     
+       return new Date(parseInt(nS) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");      
+    }  
 
 };
 

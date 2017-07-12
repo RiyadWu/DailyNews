@@ -1,7 +1,9 @@
 <template>
   <div class='weui-tab content'>
       <h1>content</h1>
-      <p>params:{{params}}</p>
+      <section v-html="isNull(content)">
+        
+      </section>
   </div>
 </template>
 
@@ -12,7 +14,9 @@ export default {
       return {
         msg: 'content Vue',
         name: 'Reborn',
-        params:String
+        params:String,
+        content:'',
+        url:'',
       }
     },
   components: {
@@ -22,11 +26,13 @@ export default {
   beforeRouteEnter(to,from,next){
     next(vm =>{
       log(vm.$route.params)
-      vm.params= vm.$route.params.id;
-      vm.foo();
+      log(vm.$route.params.url)
+      vm.url = vm.$route.params.url;
+      vm.getData()
     })
   },
   created(){
+    this.getData()
   },
   mounted() {
 
@@ -35,6 +41,18 @@ export default {
     foo() {
       console.log(Math.random().toFixed(2))
     },
+    isNull(arg){
+      return arg?arg:'<h3 class="center">no data</h3>'
+    },
+    getData(){
+      log('loading data');
+      this.$http.get('/api/info')
+      .then(res =>{
+        log(res.data)
+      }, err =>{
+        log('err')
+      })
+    }
   }
 }
 </script>

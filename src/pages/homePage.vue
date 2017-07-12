@@ -7,14 +7,14 @@
     <div class='weui-tab__panel' style="padding-top:90px;">
       <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" :autoFill='false' @top-status-change="handleTopChange">
         <!-- top -->
-        <div v-show='!isEmptyObject(top)' class="weui-panel noborder" style="margin-bottom:10px;">
+        <div class="weui-panel noborder" style="margin-bottom:10px;">
             <div class="weui-panel__bd">
                 <div class="weui-media-box weui-media-box_text">
-                    <p class="weui-media-box__desc">{{top.title}}</p>
+                    <p class="weui-media-box__desc">{{top.title || "今日头条新闻"}}</p>
                     <ul class="weui-media-box__info">
                         <li class="weui-media-box__info__meta"><span class='label la_Red'>置顶</span></li>
                         <li class="weui-media-box__info__meta">专题</li>
-                        <li class="weui-media-box__info__meta">{{top.commentNum}} 评论</li>
+                        <li class="weui-media-box__info__meta">{{top.commentNum || 233}} 评论</li>
                         <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">{{top.time <= 1?'刚刚':''}}</li>
                     </ul>
                 </div>
@@ -27,12 +27,12 @@
                 <div class="weui-media-box weui-media-box_text">
                     <p class="weui-media-box__desc" @click='toContent(item)'>{{item.title}}</p>
                     <div class='weui-media-box_img'>
-                      <img v-for='(imgs,index) in item.img' v-lazy="imgs" alt="">
+                      <img v-for='(imgs,index) in item.image_list' v-lazy="imgs.url" alt="">
                     </div>
                     <ul class="weui-media-box__info">
-                        <li class="weui-media-box__info__meta">{{item.author}}</li>
-                        <li class="weui-media-box__info__meta">{{item.commentNum}} 评论</li>
-                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">{{item.time<=1?'刚刚':item.time}} <span v-show='item.time>1'>分钟前</span>
+                        <li class="weui-media-box__info__meta">{{item.media_name}}</li>
+                        <li class="weui-media-box__info__meta">{{item.comment_count}} 评论</li>
+                        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">{{moment(item.publish_time)}}</span>
                         </li>
                         <span class='remove' @click.stop='pop($event,index)'>
                           <i class='fa fa-remove'></i>
@@ -107,19 +107,18 @@ export default {
     //loadData
     getData(){
       this.loading = true;
-      this.$http.get('/news').then(res => {
+      this.$http.get('/api/news?page='+this.page).then(res => {
           // success callback
+          // console.log(JSON.stringify(res.data,null,2))
           this.ban = false;
           this.loading = false;
-          console.log('load data 第'+this.page+'页')
-          let topinfo = res.data.data.top;
           let list = res.data.data.content;
           if(list.length == 0){
             this.allLoaded = true;
             this.nodata = true;
             return
           }
-          this.top = topinfo;
+          console.log('load data 第'+this.page+'页')
           for (var i = 0; i <list.length; i++) {
             this.list.push(list[i])
           }
@@ -153,13 +152,15 @@ export default {
       this.page = 1;
       this.list = [];
       this.top = {};
+      this.allLoaded = false;
+      this.nodata = false;
     },
     //to content
     toContent(item){
       if(this.ban){
         return
       }
-      this.$router.push({ name: 'content', params: { id: item.id , author:item.author}})
+      this.$router.push({ name:'content', params: { id: item._id , url:item.url}})
     },
     //click pop
     pop(e,index){
@@ -189,6 +190,18 @@ export default {
             return !1;
         }
         return !0
+    },
+    moment(str){
+      let res;
+      let t = str;
+      let now = Date.parse(new Date())/1000;
+      let time = ((now - t)/3600).toFixed(0);
+      if(time>1&&time<24){
+        res = time+'小时前'
+      }else if(time >= 24){
+        res = (time/24).toFixed(0)+"天前"
+      }
+      return res;
     }
   }
 }

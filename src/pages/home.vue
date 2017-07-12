@@ -54,12 +54,13 @@ export default {
     'r-foot':foot,
   },
   created(){
+    // this.foo();
   },
   mounted() {
   },
   methods:{
     foo(){
-      this.$http.get('/api/testMock').then(res => {
+      this.$http.get('/api/news').then(res => {
           // success callback
           console.log(res.data)
       }, res => {

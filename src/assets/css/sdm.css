@@ -187,6 +187,9 @@ p{
 .weui-media-box_img img:not(:first-child){
   margin-left: 5%;
 }
+.weui-loadmore_line .weui-loadmore__tips{
+  background-color: #f8f8f8 !important;
+}
 
 
 /*defined*/

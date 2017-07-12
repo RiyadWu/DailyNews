@@ -1,5 +1,5 @@
 <template>
-  <div class='404 center'>
+  <div class='404 center weui-tab'>
     <section class="center">  
         <article>  
             <h1 class="header">  
@@ -8,11 +8,11 @@
                 ERROR</p>  
         </article> 
         <article>  
-            <p>  
+            <p style="font-size:16px;">  
                 Lost? Maybe I can help.</p>  
         </article> 
         <article>
-            <router-link to="/">home</router-link>
+            <router-link to="/" style="font-size:16px;">home</router-link>
         </article>  
     </section>  
   </div>
@@ -126,7 +126,7 @@ form > *
 /* 404 Styling */  
 .header   
 {   
-    font-size: 13rem;   
+    font-size: 3rem;   
     font-weight: 700;   
     margin: 2% 0 2% 0;   
     text-shadow: 0px 3px 0px #7f8c8d;   
@@ -136,7 +136,7 @@ form > *
 .error   
 {   
     margin: -20px 0 2% 0;   
-    font-size: 7.4rem;   
+    font-size: 2.4rem;   
     text-shadow: 0px 3px 0px #7f8c8d;   
     font-weight: 100;   
 }  

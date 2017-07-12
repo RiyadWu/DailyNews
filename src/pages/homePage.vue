@@ -164,7 +164,7 @@ export default {
     },
     //click pop
     pop(e,index){
-      log('index==============>'+index);
+      log('index=============>'+index);
       this.index = index;
       this.$parent.showPop = true;
       let H = $(window).height();

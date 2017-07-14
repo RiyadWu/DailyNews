@@ -874,3 +874,13 @@ p {
     transform: scale(0.8);
     -webkit-transform: scale(0.8);
 }
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: #fff;
+}
+img{
+    width: 100%;
+}

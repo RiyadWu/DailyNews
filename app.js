@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const index = require('./route/index')
 const news = require('./route/news')
+const info = require('./route/info')
 
 // mongoose.connection(config.mongodb)
 console.log("mongodb==============>"+config.mongodb)
@@ -29,6 +30,7 @@ app.use(favicon(__dirname + '/src/assets/favicon.ico'))
 app.use(express.static('dist'))
 app.use('/',index)
 app.use('/api',news)
+app.use('/api',info)
 
 
 app.listen(port, () => {

@@ -17,4 +17,4 @@ const infoSchema = mongoose.Schema({
     "video_play_count": Number
 })
 
-const Info = module.exports = mongoose.model('Info', infoSchema)
+const Infos = module.exports = mongoose.model('Infos', infoSchema)

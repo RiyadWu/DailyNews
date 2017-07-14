@@ -1,8 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const News = require('../models/news')
-const Top = require('../models/top')
-const Info = require('../models/info')
 
 var data = {
         code: Number,
@@ -31,17 +29,6 @@ router.get('/news', (req, res) => {
                 data.msg = "request err"
                 data.data = null
                 res.json(data)
-            })
-    })
-    // news info
-router.get('/info', (req, res) => {
-        Info.find({})
-            .then(info => {
-            console.log("info=========>"+info)
-                res.json(info)
-            })
-            .catch(err => {
-                res.json(err)
             })
     })
     // add news

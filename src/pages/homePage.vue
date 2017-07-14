@@ -164,7 +164,14 @@ export default {
       if(this.ban){
         return
       }
-      this.$router.push({ name:'content', params: { id: item._id , url:item.url}})
+      let json = {
+        content:item.content, 
+        title:item.title,
+        author:item.media_name,
+        author_img:item.media_info.avatar_url,
+        date:this.moment(item.publish_time)
+      }
+      this.$router.push({ name:'content', params: { id: item._id , data:json}})
     },
     //click pop
     pop(e,index){

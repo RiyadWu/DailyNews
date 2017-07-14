@@ -1,8 +1,18 @@
 <template>
-  <div class='weui-tab content'>
-      <h1>content</h1>
-      <section v-html="isNull(content)">
-        
+  <div class='weui-tab container' style="overflow:auto">
+      <h1>{{data.title}}</h1>
+      <div class='info'>
+        <div class='info_row'>
+          <img v-lazy="data.author_img" alt="" class='fl' style="width:.7rem; margin-right:10px; margin-top:5px;">
+          <p>{{data.author}}</p>
+          <p>{{data.date}}</p>
+        </div>
+        <div class='abs_r'>
+          <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">关注</a>
+        </div>
+        <div class='clear'></div>
+      </div>
+      <section v-html="isNull(data.content)">
       </section>
   </div>
 </template>
@@ -15,8 +25,7 @@ export default {
         msg: 'content Vue',
         name: 'Reborn',
         params:String,
-        content:'',
-        url:'',
+        data:'',
       }
     },
   components: {
@@ -25,10 +34,9 @@ export default {
   //解决缓存
   beforeRouteEnter(to,from,next){
     next(vm =>{
-      log(vm.$route.params)
-      log(vm.$route.params.url)
-      vm.url = vm.$route.params.url;
-      vm.getData()
+      vm.data = vm.$route.params.data
+      log(JSON.stringify(vm.data,null,2))
+      // vm.getData()
     })
   },
   created(){
@@ -46,17 +54,24 @@ export default {
     },
     getData(){
       log('loading data');
-      this.$http.get('/api/info')
-      .then(res =>{
-        log(res.data)
-      }, err =>{
-        log('err')
-      })
+
     }
   }
 }
 </script>
 
 <style scoped>
-
+.weui-btn_default {
+    color: #fff;
+    background-color: blue;
+}
+.info{
+  position: relative;
+  margin-bottom: 10px;
+}
+.abs_r{
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
 </style>

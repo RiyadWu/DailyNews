@@ -24,13 +24,16 @@
         <!-- list -->
         <div class="weui-panel" :class='{noborder:index == 0}' v-for='(item,index) in list'>
             <div class="weui-panel__bd">
-                <div class="weui-media-box weui-media-box_text">
-                    <p class="weui-media-box__desc" @click='toContent(item)'>{{item.title}}</p>
+                <div class="weui-media-box weui-media-box_text" :class='{w67:item.video_detail_info}'>
+                    <p class="weui-media-box__desc" @click='toContent(item)'>{{item.title}}
+                    </p>
                     <div class='weui-media-box_img'>
                       <img v-for='(imgs,index) in item.image_list' v-lazy="imgs.url" alt="">
                     </div>
                     <ul class="weui-media-box__info">
-                        <li class="weui-media-box__info__meta">{{item.media_name}}</li>
+                        <li class="weui-media-box__info__meta">
+                          <img class='avatar_url' v-lazy="item.media_info.avatar_url" alt="">
+                        {{item.media_name}}</li>
                         <li class="weui-media-box__info__meta">{{item.comment_count}} 评论</li>
                         <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">{{moment(item.publish_time)}}</span>
                         </li>
@@ -39,6 +42,7 @@
                         </span>
                     </ul>
                 </div>
+                <img class='video_img' v-if='item.video_detail_info' v-lazy="item.video_detail_info.detail_video_large_image.url" alt="">
             </div>
         </div>
         <!-- /list -->
@@ -208,4 +212,17 @@ export default {
 </script>
 
 <style scoped>
+.video_img{
+  width: 3rem;
+  margin-top: 0.3rem;
+  margin-right: 0.3rem;
+}
+.w67{
+  width: 6.7rem;
+  float: left;
+}
+.avatar_url{
+  width: 15px;
+  vertical-align: middle;
+}
 </style>

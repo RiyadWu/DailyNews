@@ -10,8 +10,8 @@ Vue.prototype.$http = axios
 import VueLazyload from 'vue-lazyload'
 Vue.use(VueLazyload);
 import $ from '@/assets/js/jquery-vendor.js'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap/dist/js/bootstrap.js'
+// import 'bootstrap/dist/css/bootstrap.css'
+// import 'bootstrap/dist/js/bootstrap.js'
 import '@/assets/js/flexible.js'
 import home from '@/pages/home'
 import NotFound from '@/pages/404'

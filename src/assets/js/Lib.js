@@ -69,7 +69,7 @@ $(function() {
         $(".find_nav_list").animate({
             "left": fnl_l
         }, 300);
-        sessionStorage.left = fnl_l;
+        // sessionStorage.left = fnl_l;
         var c_nav = $(this).find("a").text();
         navName(c_nav);
     });
